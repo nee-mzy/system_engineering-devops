@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-# Sends SIGTERM to the 7-highlander process
+# Send SIGTERM to any running 7-highlander process
 
-# Use pkill to send SIGTERM to processes whose command line matches 7-highlander
-pkill -f "7-highlander" 2>/dev/null || true
+# Find PIDs of processes whose command line contains "7-highlander" and send SIGTERM
+pids=$(pgrep -f "7-highlander") || pids=""
+if [ -n "$pids" ]; then
+  kill -TERM $pids 2>/dev/null || true
+fi
